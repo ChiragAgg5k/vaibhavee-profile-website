@@ -1,0 +1,1780 @@
+:root {
+  --paper: #f3efe6;
+  --paper-2: #ebe5d7;
+  --ink: #141210;
+  --ink-2: #2a2622;
+  --muted: #6b6357;
+  --rule: #1a1815;
+  --amber: #d9731a;
+  --amber-deep: #b4591a;
+  --red: #a23221;
+  --moss: #4a5d3a;
+  --line: rgba(20, 18, 16, 0.14);
+  --line-2: rgba(20, 18, 16, 0.28);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Newsreader', Georgia, serif;
+  font-weight: 400;
+}
+
+body {
+  font-size: 17px;
+  line-height: 1.55;
+  background-image:
+    radial-gradient(rgba(20, 18, 16, 0.035) 1px, transparent 1.2px),
+    radial-gradient(1200px 800px at 10% -10%, rgba(217, 115, 26, 0.07), transparent 60%),
+    radial-gradient(900px 700px at 110% 10%, rgba(74, 93, 58, 0.05), transparent 55%);
+  background-size: 3px 3px, auto, auto;
+}
+
+.mono {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+
+.serif-d {
+  font-family: 'Instrument Serif', serif;
+  font-weight: 400;
+}
+
+/* ============ Layout ============ */
+/* `.page` owns only horizontal gutter so sections that also set their
+   own vertical padding (.mast / .contact / section) don't clobber the
+   left/right gutter via padding shorthand. Without this split, on any
+   viewport narrower than the 1240px max-width the header and contact
+   sections bleed to the viewport edge. */
+.page {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+/* The phone-width .page gutter (20px) is declared further down in the
+   responsive cascade, after the (max-width: 1100px) rule, so source order
+   lets it win at viewports ≤720px. Don't reintroduce a duplicate here. */
+
+/* ============ Top nav ============ */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 0 14px;
+  border-bottom: 1px solid var(--line);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--ink-2);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.topbar .mark {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--ink);
+}
+
+.mark-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--amber);
+  box-shadow: 0 0 0 3px rgba(217, 115, 26, 0.18);
+}
+
+.mark-dot.live {
+  animation: pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(217, 115, 26, 0.55);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(217, 115, 26, 0);
+  }
+}
+
+.nav-links {
+  display: flex;
+  gap: 26px;
+}
+
+.nav-links a {
+  color: var(--ink-2);
+  text-decoration: none;
+  position: relative;
+}
+
+.nav-links a:hover {
+  color: var(--amber-deep);
+}
+
+.nav-links a .num {
+  color: var(--muted);
+  margin-right: 6px;
+}
+
+.nav-right {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  width: 52px;
+  height: 26px;
+  padding: 2px;
+  position: relative;
+  border: 1px solid var(--line-2);
+  background: transparent;
+  border-radius: 20px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--muted);
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.theme-toggle:hover {
+  border-color: var(--ink);
+}
+
+.theme-toggle span {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  transition: color 0.2s;
+}
+
+.theme-toggle::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 22px;
+  height: 20px;
+  background: var(--ink);
+  border-radius: 16px;
+  transition: transform 0.25s ease;
+}
+
+body.ink .theme-toggle::before {
+  transform: translateX(24px);
+}
+
+.theme-toggle .tt-sun {
+  color: var(--paper);
+}
+
+.theme-toggle .tt-moon {
+  color: var(--muted);
+}
+
+body.ink .theme-toggle .tt-sun {
+  color: var(--muted);
+}
+
+body.ink .theme-toggle .tt-moon {
+  color: var(--paper);
+}
+
+/* ============ Masthead ============ */
+.mast {
+  position: relative;
+  padding-top: 110px;
+  padding-bottom: 90px;
+  border-bottom: 1px solid var(--line);
+}
+
+.mast-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.mast h1 {
+  font-family: 'Instrument Serif', serif;
+  font-weight: 400;
+  font-size: clamp(64px, 9vw, 148px);
+  line-height: 0.92;
+  letter-spacing: -0.01em;
+  margin: 0 0 40px;
+  color: var(--ink);
+}
+
+.mast h1 .ital {
+  font-style: italic;
+  color: var(--ink-2);
+}
+
+.mast h1 .and {
+  font-family: 'Newsreader', serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: 0.42em;
+  vertical-align: 0.55em;
+  margin: 0 0.08em;
+  color: var(--muted);
+}
+
+.kicker {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 60px;
+}
+
+.kicker .sep {
+  width: 28px;
+  height: 1px;
+  background: var(--line-2);
+}
+
+.mast-lede {
+  font-family: 'Newsreader', serif;
+  font-size: 22px;
+  line-height: 1.45;
+  color: var(--ink-2);
+  max-width: 44ch;
+  margin-bottom: 44px;
+}
+
+.mast-lede .drop {
+  float: left;
+  font-family: 'Instrument Serif', serif;
+  font-size: 70px;
+  line-height: 0.8;
+  margin: 6px 8px 0 0;
+  color: var(--amber-deep);
+}
+
+.mast-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px 28px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--ink-2);
+  padding-top: 28px;
+  border-top: 1px dashed var(--line-2);
+  max-width: 520px;
+  margin-bottom: 32px;
+}
+
+.mast-meta .k {
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 10.5px;
+  margin-bottom: 2px;
+}
+
+.portrait-wrap {
+  position: relative;
+  justify-self: end;
+  width: 100%;
+  max-width: 360px;
+}
+
+.portrait {
+  width: 100%;
+  aspect-ratio: 4/5;
+  object-fit: cover;
+  filter: grayscale(0.15) contrast(1.02) sepia(0.08);
+  border-radius: 2px;
+  box-shadow: 0 1px 0 var(--line-2), 0 30px 50px -30px rgba(20, 18, 16, 0.35);
+}
+
+.portrait-frame {
+  position: absolute;
+  inset: -14px -14px -14px -14px;
+  border: 1px solid var(--line-2);
+  pointer-events: none;
+}
+
+.portrait-tag {
+  position: absolute;
+  left: -14px;
+  top: -34px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+.portrait-caption {
+  position: absolute;
+  right: -14px;
+  bottom: -38px;
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  color: var(--ink-2);
+  font-size: 16px;
+}
+
+.portrait-caption::before {
+  content: '';
+  position: absolute;
+  left: -28px;
+  top: 50%;
+  width: 22px;
+  height: 1px;
+  background: var(--ink-2);
+}
+
+/* Ticker */
+.ticker {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  overflow: hidden;
+  background: var(--paper-2);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+
+.ticker-track {
+  display: flex;
+  gap: 48px;
+  white-space: nowrap;
+  padding: 10px 0;
+  animation: scroll 40s linear infinite;
+}
+
+.ticker span {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.ticker .dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--amber);
+}
+
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ============ Section scaffolding ============ */
+section {
+  padding-top: 140px;
+  padding-bottom: 140px;
+  border-bottom: 1px solid var(--line);
+  position: relative;
+}
+
+.sec-head {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 40px;
+  align-items: baseline;
+  margin-bottom: 64px;
+}
+
+.sec-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-top: 2px solid var(--ink);
+  padding-top: 10px;
+}
+
+.sec-title {
+  font-family: 'Instrument Serif', serif;
+  font-size: 54px;
+  line-height: 1;
+  margin: 0;
+  letter-spacing: -0.005em;
+}
+
+.sec-title em {
+  font-style: italic;
+  color: var(--muted);
+}
+
+/* ============ About ============ */
+.about-grid {
+  display: grid;
+  grid-template-columns: 160px 1fr 1fr;
+  gap: 40px;
+}
+
+.about p {
+  font-family: 'Newsreader', serif;
+  font-size: 19px;
+  line-height: 1.6;
+  color: var(--ink-2);
+  margin: 0 0 20px;
+  text-wrap: pretty;
+}
+
+.about p.big {
+  font-size: 26px;
+  line-height: 1.4;
+  color: var(--ink);
+  font-weight: 400;
+}
+
+.about p.big em {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  color: var(--amber-deep);
+  font-weight: 400;
+}
+
+.sidecol {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--ink-2);
+}
+
+.sidecol dt {
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 10.5px;
+  margin-top: 14px;
+}
+
+.sidecol dt:first-child {
+  margin-top: 0;
+}
+
+.sidecol dd {
+  margin: 4px 0 0;
+}
+
+.sig {
+  display: inline-block;
+  margin-top: 10px;
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-size: 38px;
+  color: var(--ink);
+  transform: rotate(-3deg);
+}
+
+/* ============ Work / timeline ============ */
+.work-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.work-row {
+  display: grid;
+  grid-template-columns: 160px 1fr auto;
+  gap: 40px;
+  padding: 40px 0;
+  border-top: 1px solid var(--line);
+  cursor: pointer;
+  position: relative;
+  transition: background 0.3s ease;
+}
+
+.work-row:first-child {
+  border-top: 2px solid var(--ink);
+}
+
+.work-row:hover {
+  background: rgba(217, 115, 26, 0.05);
+}
+
+.work-row .year {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  padding-top: 4px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.work-row .logo {
+  height: 40px;
+  width: auto;
+  max-width: 56px;
+  object-fit: contain;
+  flex-shrink: 0;
+  /* Multiply drops Scopely's white JPG background into the paper tone
+     and warms Blinkit's yellow without looking like an app icon. */
+  mix-blend-mode: multiply;
+  filter: saturate(0.92) contrast(1.02);
+  opacity: 0.92;
+  transition: filter 0.25s ease, opacity 0.25s ease;
+}
+
+.work-row:hover .logo {
+  filter: saturate(1) contrast(1.02);
+  opacity: 1;
+}
+
+/* Dark theme: mix-blend-mode: multiply collapses to black against ink,
+   so drop the blend and let each logo sit on the page directly. Logos
+   flagged .logo-whitebg (e.g. Scopely's JPG) get inverted so their white
+   plate turns to ink and their mark reads cream — no chip, no border. */
+body.ink .work-row .logo {
+  mix-blend-mode: normal;
+  filter: saturate(0.95) contrast(1.02);
+  opacity: 0.88;
+}
+
+body.ink .work-row .logo.logo-whitebg {
+  filter: invert(1) hue-rotate(180deg) saturate(0.9);
+  opacity: 0.82;
+}
+
+body.ink .work-row:hover .logo {
+  opacity: 1;
+}
+
+body.ink .work-row:hover .logo.logo-whitebg {
+  opacity: 0.95;
+}
+
+.work-row .role {
+  font-family: 'Instrument Serif', serif;
+  font-size: 34px;
+  line-height: 1.05;
+  margin: 0 0 4px;
+  letter-spacing: -0.005em;
+}
+
+.work-row .org {
+  font-family: 'Newsreader', serif;
+  font-style: italic;
+  color: var(--ink-2);
+  font-size: 17px;
+}
+
+.work-row .org .dot {
+  margin: 0 8px;
+  color: var(--muted);
+}
+
+.work-row .meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding-top: 10px;
+  text-align: right;
+}
+
+.work-row .meta .now {
+  display: inline-block;
+  padding: 2px 6px;
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: 2px;
+}
+
+.work-row .expand {
+  grid-column: 1 / -1;
+  display: none;
+  padding: 16px 0 4px;
+  margin-top: 14px;
+  border-top: 1px dashed var(--line-2);
+  font-family: 'Newsreader', serif;
+  color: var(--ink-2);
+  font-size: 17px;
+  line-height: 1.6;
+  max-width: 70ch;
+}
+
+.work-row.open .expand {
+  display: block;
+}
+
+.work-row .stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.chip {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  padding: 3px 8px;
+  border: 1px solid var(--line-2);
+  border-radius: 2px;
+  color: var(--ink-2);
+}
+
+.work-row .arrow {
+  position: absolute;
+  right: 0;
+  top: 32px;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--muted);
+  font-size: 13px;
+  transition: transform 0.3s ease;
+}
+
+.work-row.open .arrow {
+  transform: rotate(90deg);
+  color: var(--amber-deep);
+}
+
+/* ============ Projects ============ */
+.projects-bar {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.filter {
+  padding: 6px 12px;
+  border: 1px solid var(--line-2);
+  background: transparent;
+  color: var(--ink-2);
+  cursor: pointer;
+  border-radius: 2px;
+}
+
+.filter:hover {
+  border-color: var(--ink);
+}
+
+.filter.active {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+
+.filter .cnt {
+  color: var(--muted);
+  margin-left: 6px;
+}
+
+.filter.active .cnt {
+  color: rgba(243, 239, 230, 0.6);
+}
+
+.proj-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 32px 32px;
+}
+
+.proj {
+  grid-column: span 6;
+  padding: 24px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.35);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+  min-height: 260px;
+  transition: all 0.35s cubic-bezier(0.2, 0.7, 0.3, 1);
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.proj:visited,
+.proj:active,
+.proj:link {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.proj:hover {
+  background: rgba(255, 255, 255, 0.7);
+  border-color: var(--ink);
+  transform: translateY(-2px);
+}
+
+/* Flag card is theme-adaptive in LIGHT mode: paper-toned with a thick ink
+   border and an amber index number so it still reads as a flagship tile.
+   The original "always-dark" treatment is restored in body.ink below. */
+.proj.flag {
+  grid-column: span 12;
+  min-height: 280px;
+  background: rgba(20, 18, 16, 0.03);
+  border-color: var(--ink);
+}
+
+.proj.flag:hover {
+  background: rgba(20, 18, 16, 0.07);
+}
+
+.proj.flag .p-head .p-index {
+  color: var(--amber);
+}
+
+/* NETRA confusion-matrix cells follow the active accent (amber / moss / red)
+   by hooking into CSS vars through a class, since SVG attributes can't
+   reference CSS custom properties directly. */
+.p-art svg .cell {
+  fill: var(--amber);
+}
+
+.proj .p-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.proj .p-index {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+}
+
+.proj .p-kicker {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.proj .p-title {
+  font-family: 'Instrument Serif', serif;
+  font-size: 40px;
+  line-height: 1;
+  margin: 6px 0 0;
+  letter-spacing: -0.005em;
+}
+
+.proj.small .p-title {
+  font-size: 30px;
+}
+
+.proj .p-desc {
+  font-family: 'Newsreader', serif;
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--ink-2);
+  margin: 0;
+  text-wrap: pretty;
+}
+
+.proj .p-foot {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px;
+}
+
+.proj .p-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.proj .p-link {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 1px;
+  white-space: nowrap;
+}
+
+.proj .p-link:hover {
+  color: var(--amber);
+}
+
+.proj.flag .p-art {
+  position: absolute;
+  right: 28px;
+  top: 24px;
+  bottom: 24px;
+  width: 40%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.proj.flag .p-inner {
+  max-width: 58%;
+}
+
+/* NETRA art */
+.art-netra {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.art-netra svg {
+  width: 100%;
+  height: 100%;
+}
+
+.proj.span-4 {
+  grid-column: span 4;
+}
+
+.proj.span-8 {
+  grid-column: span 8;
+}
+
+@media (max-width: 900px) {
+  .proj,
+  .proj.flag,
+  .proj.span-4,
+  .proj.span-8 {
+    grid-column: span 12;
+  }
+
+  .mast-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Once the grid collapses, the portrait needs to re-center — it was
+     aligned to the right column on desktop, which reads as "left-stuck"
+     after stacking. */
+  .portrait-wrap {
+    max-width: 280px;
+    justify-self: center;
+    margin-top: 36px;
+  }
+
+  .about-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sec-head {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .work-row {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .work-row .meta {
+    text-align: left;
+  }
+
+  .work-row .arrow {
+    display: none;
+  }
+}
+
+/* ============ Publications ============ */
+.pubs {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 24px;
+}
+
+.pub {
+  grid-column: span 6;
+  padding: 28px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.pub .venue {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--amber-deep);
+}
+
+.pub .t {
+  font-family: 'Instrument Serif', serif;
+  font-size: 28px;
+  line-height: 1.1;
+  margin: 8px 0 10px;
+  text-wrap: pretty;
+}
+
+.pub .cite {
+  font-family: 'Newsreader', serif;
+  font-style: italic;
+  font-size: 15px;
+  color: var(--muted);
+}
+
+.pub .abs {
+  font-family: 'Newsreader', serif;
+  font-size: 16.5px;
+  line-height: 1.55;
+  color: var(--ink-2);
+  margin-top: 12px;
+  text-wrap: pretty;
+}
+
+/* ============ Stack ============ */
+.stack-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+}
+
+.stack-grid h4 {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 14px;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 8px;
+}
+
+.stack-grid ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.stack-grid li {
+  font-family: 'Instrument Serif', serif;
+  font-size: 22px;
+  line-height: 1.3;
+  color: var(--ink);
+}
+
+.stack-grid li .pct {
+  float: right;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+  margin-top: 8px;
+}
+
+@media (max-width: 900px) {
+  .stack-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ============ Testimonial ============ */
+.quote-wrap {
+  display: grid;
+  grid-template-columns: 160px 1fr 200px;
+  gap: 40px;
+  align-items: start;
+}
+
+.quote {
+  font-family: 'Instrument Serif', serif;
+  font-size: 44px;
+  line-height: 1.15;
+  color: var(--ink);
+  text-wrap: pretty;
+  position: relative;
+}
+
+.quote::before {
+  content: '\201C';
+  font-family: 'Instrument Serif', serif;
+  font-size: 120px;
+  position: absolute;
+  top: -60px;
+  left: -24px;
+  color: var(--amber);
+  line-height: 1;
+}
+
+.quote em {
+  font-style: italic;
+  color: var(--amber-deep);
+}
+
+.cred {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--ink-2);
+  margin-top: 20px;
+  letter-spacing: 0.04em;
+}
+
+.cred .n {
+  color: var(--ink);
+  font-weight: 500;
+  display: block;
+  margin-bottom: 3px;
+}
+
+@media (max-width: 900px) {
+  .quote-wrap {
+    grid-template-columns: 1fr;
+  }
+  .quote {
+    font-size: 28px;
+  }
+}
+
+/* ============ Footer / contact ============ */
+.contact {
+  padding-top: 120px;
+  padding-bottom: 60px;
+  border-bottom: none;
+  text-align: left;
+  background: linear-gradient(180deg, transparent, rgba(20, 18, 16, 0.03));
+}
+
+.contact h2 {
+  font-family: 'Instrument Serif', serif;
+  font-weight: 400;
+  font-size: clamp(52px, 8vw, 128px);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  margin: 0 0 40px;
+}
+
+.contact h2 em {
+  font-style: italic;
+  color: var(--muted);
+}
+
+.contact h2 .amper {
+  color: var(--amber-deep);
+  font-style: italic;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 60px;
+  align-items: end;
+}
+
+.contact p.lede {
+  font-family: 'Newsreader', serif;
+  font-size: 22px;
+  line-height: 1.5;
+  color: var(--ink-2);
+  max-width: 48ch;
+  text-wrap: pretty;
+}
+
+.contact a.big-mail {
+  display: inline-block;
+  font-family: 'Instrument Serif', serif;
+  font-size: 48px;
+  font-style: italic;
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 2px solid var(--ink);
+  margin-top: 20px;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.contact a.big-mail:hover {
+  color: var(--amber-deep);
+  border-color: var(--amber-deep);
+}
+
+.social {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+}
+
+.social a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+  color: var(--ink-2);
+  text-decoration: none;
+  transition: padding 0.2s ease, color 0.2s;
+}
+
+.social a:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+.social a:hover {
+  padding-left: 12px;
+  color: var(--amber-deep);
+}
+
+.social a .arr {
+  color: var(--muted);
+}
+
+.social a:hover .arr {
+  color: var(--amber-deep);
+}
+
+.footer-rule {
+  padding: 24px 0 30px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.colophon {
+  display: flex;
+  gap: 18px;
+}
+
+/* Marginalia */
+.margin-note {
+  position: absolute;
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  color: var(--amber-deep);
+  font-size: 15px;
+  line-height: 1.2;
+  max-width: 180px;
+}
+
+.margin-note::before {
+  content: '';
+  display: inline-block;
+  width: 28px;
+  height: 14px;
+  border-bottom: 1px solid var(--amber-deep);
+  border-left: 1px solid var(--amber-deep);
+  transform: skewX(-30deg);
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+/* Tweaks panel */
+.tweaks {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 50;
+  width: 280px;
+  background: var(--paper-2);
+  border: 1px solid var(--ink);
+  padding: 16px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.3);
+  display: none;
+}
+
+.tweaks.on {
+  display: block;
+}
+
+.tweaks h5 {
+  margin: 0 0 10px;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tweaks h5 .x {
+  cursor: pointer;
+  color: var(--muted);
+}
+
+.tweak-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  border-top: 1px dashed var(--line-2);
+  gap: 8px;
+}
+
+.tweak-row .k {
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 10px;
+}
+
+.tweak-row .vals {
+  display: flex;
+  gap: 4px;
+}
+
+.tweak-row button {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  padding: 4px 8px;
+  border: 1px solid var(--line-2);
+  background: transparent;
+  cursor: pointer;
+  color: var(--ink-2);
+}
+
+.tweak-row button.on {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+
+.sw {
+  width: 18px;
+  height: 18px;
+  border: 1px solid var(--line-2);
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.sw.on {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+/* theme: ink (dark) */
+body.ink {
+  --paper: #141210;
+  --paper-2: #1b1915;
+  --ink: #f3efe6;
+  --ink-2: #d9d2c3;
+  --muted: #8c8373;
+  --line: rgba(243, 239, 230, 0.14);
+  --line-2: rgba(243, 239, 230, 0.25);
+  --rule: #f3efe6;
+}
+
+body.ink .portrait {
+  filter: grayscale(0.25) contrast(0.95) brightness(0.92);
+}
+
+body.ink .proj.flag {
+  background: #242019;
+  border-color: #2b2720;
+  /* The flag card stays dark in both themes. Anchor text to cream so it
+     doesn't inherit the flipped --paper variable (which becomes dark in
+     ink mode and causes black-on-black). */
+  color: #f3efe6;
+}
+
+body.ink .proj.flag .p-title {
+  color: #f3efe6;
+}
+
+body.ink .proj.flag .p-desc {
+  color: rgba(243, 239, 230, 0.8);
+}
+
+body.ink .proj.flag .p-kicker,
+body.ink .proj.flag .p-stack .chip {
+  color: rgba(243, 239, 230, 0.7);
+  border-color: rgba(243, 239, 230, 0.2);
+}
+
+body.ink .proj.flag .p-link {
+  color: #f3efe6;
+  border-bottom-color: #f3efe6;
+}
+
+body.ink .proj.flag .p-link:hover {
+  color: var(--amber);
+  border-bottom-color: var(--amber);
+}
+
+body.ink .proj.flag .p-index {
+  color: var(--amber);
+}
+
+body.ink .proj {
+  background: rgba(255, 250, 240, 0.03);
+}
+
+body.ink .pub {
+  background: rgba(255, 250, 240, 0.03);
+}
+
+/* accent overrides */
+body.moss {
+  --amber: #6d8a4a;
+  --amber-deep: #4a5d3a;
+}
+
+body.red {
+  --amber: #c6442d;
+  --amber-deep: #a23221;
+}
+
+/* ============ small helpers ============ */
+.hr-rule {
+  height: 1px;
+  background: var(--line);
+  margin: 0;
+}
+
+.inline-mono {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.86em;
+  letter-spacing: 0.02em;
+  color: var(--amber-deep);
+}
+
+/* Clickable badges row in masthead */
+.quick-links {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 24px;
+}
+
+.qlink {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  text-decoration: none;
+  padding: 6px 10px;
+  border: 1px solid var(--line-2);
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  transition: all 0.2s;
+}
+
+.qlink:hover {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+
+.qlink .arr {
+  color: var(--muted);
+}
+
+.qlink:hover .arr {
+  color: var(--paper);
+}
+
+/* ============ Responsive (tablet → phone) ============
+   Layered from the widest breakpoint down. Earlier rules in the file
+   already collapse sec-head / mast-grid / about-grid / work-row / stack-grid
+   / quote-wrap / proj.flag-span-8-span-4 at ≤900px; the blocks below
+   extend that coverage to pubs, contact, topbar, flag card art, and the
+   vertical rhythm of every section, plus a phone-only tightening pass.
+
+   IMPORTANT: use padding-left/right longhand on .page and padding-top/
+   bottom longhand on .mast / .contact / section. The shorthand `padding`
+   would clobber horizontal gutter on <header class="page mast"> and
+   <section class="page contact">, bleeding copy to the viewport edge on
+   any viewport narrower than the 1240px max-width. */
+
+@media (max-width: 1100px) {
+  .page {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+  .mast-grid {
+    gap: 56px;
+  }
+  .proj.flag .p-inner {
+    max-width: 62%;
+  }
+}
+
+@media (max-width: 900px) {
+  /* Topbar wraps its three regions onto two rows so the nav can breathe. */
+  .topbar {
+    flex-wrap: wrap;
+    gap: 12px 20px;
+    padding: 18px 0 12px;
+  }
+  .nav-links {
+    order: 3;
+    width: 100%;
+    gap: 14px 18px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+  .nav-links a .num {
+    display: none;
+  }
+
+  /* Section rhythm — 140px top/bottom becomes unbearable on narrow viewports. */
+  section {
+    padding-top: 90px;
+    padding-bottom: 90px;
+  }
+  .mast {
+    padding-top: 80px;
+    padding-bottom: 70px;
+  }
+
+  /* Hero */
+  .kicker {
+    flex-wrap: wrap;
+    gap: 10px 14px;
+    margin-bottom: 40px;
+  }
+  .mast h1 {
+    font-size: clamp(56px, 10vw, 108px);
+    margin-bottom: 28px;
+  }
+  .mast-lede {
+    max-width: 100%;
+  }
+  .mast-meta {
+    max-width: 100%;
+  }
+
+  /* Sec-head stacks — baseline alignment reads cramped once stacked, and
+     the amber rule above the title wants to breathe a bit more. */
+  .sec-head {
+    align-items: start;
+    margin-bottom: 48px;
+  }
+  .sec-title {
+    font-size: clamp(40px, 7vw, 54px);
+  }
+
+  /* Pubs — 6-col cards go full width */
+  .pub {
+    grid-column: span 12;
+    padding: 24px;
+  }
+
+  /* Flag project card — un-absolute the art so it stacks below copy */
+  .proj.flag {
+    min-height: 0;
+  }
+  .proj.flag .p-inner {
+    max-width: 100%;
+  }
+  /* Match the viewBox aspect (400/280) so the SVG fits exactly inside
+     the card without overflow into the next tile. The desktop layout
+     uses absolute positioning to give the box a definite height; on
+     mobile we replace that with aspect-ratio. */
+  .proj.flag .p-art {
+    position: static;
+    display: block;
+    width: 100%;
+    margin-top: 8px;
+    aspect-ratio: 400 / 280;
+  }
+  .proj.flag .p-art svg {
+    display: block;
+  }
+
+  /* Quote wrap collapses to 1 col (via earlier rule); the empty left
+     spacer column becomes a useless row — hide it. */
+  .quote-wrap > div:empty {
+    display: none;
+  }
+
+  /* Contact grid collapses, footer rule wraps */
+  .contact {
+    padding-top: 100px;
+    padding-bottom: 60px;
+  }
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+  .footer-rule {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .colophon {
+    flex-wrap: wrap;
+    gap: 6px 14px;
+  }
+}
+
+@media (max-width: 720px) {
+  /* Phone gutter — must live in this layered block so it wins over the
+     32px gutter defined in the (max-width: 1100px) rule above. */
+  .page {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  /* Topbar — trim the mark tail and the timezone readout */
+  .topbar .mark span:nth-child(n + 3) {
+    display: none;
+  }
+  .nav-right > span:first-child {
+    display: none;
+  }
+
+  /* Section rhythm tightens further */
+  section {
+    padding-top: 70px;
+    padding-bottom: 70px;
+  }
+  .mast {
+    padding-top: 56px;
+    padding-bottom: 56px;
+  }
+
+  /* Hero copy */
+  .mast h1 {
+    font-size: clamp(48px, 12vw, 80px);
+  }
+  .mast-lede {
+    font-size: 19px;
+    line-height: 1.5;
+    margin-bottom: 32px;
+  }
+  .mast-lede .drop {
+    font-size: 52px;
+    margin: 4px 6px 0 0;
+  }
+  .mast-meta {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding-top: 20px;
+  }
+  .kicker {
+    font-size: 10.5px;
+    margin-bottom: 32px;
+  }
+  .kicker .sep {
+    width: 20px;
+  }
+  .quick-links {
+    gap: 8px;
+  }
+
+  /* About */
+  .about p {
+    font-size: 17px;
+  }
+  .about p.big {
+    font-size: 22px;
+  }
+  .sig {
+    font-size: 32px;
+  }
+
+  /* Work */
+  .work-row {
+    padding: 28px 0;
+  }
+  .work-row .role {
+    font-size: 26px;
+  }
+  .work-row .org {
+    font-size: 16px;
+  }
+  .work-row .expand {
+    font-size: 16px;
+  }
+  .work-row .logo {
+    height: 34px;
+    max-width: 48px;
+  }
+
+  /* Projects */
+  .proj-grid {
+    gap: 20px;
+  }
+  .proj {
+    padding: 20px;
+    min-height: 0;
+  }
+  .proj .p-title {
+    font-size: 32px;
+  }
+  .proj .p-foot {
+    gap: 12px;
+  }
+  /* aspect-ratio set in the ≤900 block already keeps the SVG contained;
+     no height override needed at this breakpoint. */
+  .projects-bar {
+    gap: 6px;
+  }
+  .filter {
+    padding: 5px 10px;
+  }
+
+  /* Publications */
+  .pubs {
+    gap: 18px;
+  }
+  .pub {
+    padding: 22px;
+  }
+  .pub .t {
+    font-size: 24px;
+  }
+  .pub .abs {
+    font-size: 15.5px;
+  }
+
+  /* Stack / toolbelt */
+  .stack-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  /* Quote decorative " gets shorter and closer */
+  .quote {
+    font-size: 26px;
+  }
+  .quote::before {
+    font-size: 76px;
+    top: -38px;
+    left: -10px;
+  }
+
+  /* Contact */
+  .contact {
+    padding-top: 72px;
+    padding-bottom: 40px;
+  }
+  .contact h2 {
+    margin-bottom: 28px;
+  }
+  .contact p.lede {
+    font-size: 17px;
+  }
+  .contact a.big-mail {
+    font-size: clamp(26px, 7.2vw, 40px);
+    word-break: break-word;
+  }
+  .social a {
+    padding: 10px 0;
+  }
+
+  /* Ticker gap shrinks so more items fit per loop */
+  .ticker-track {
+    gap: 30px;
+  }
+
+  /* Hide the floating tweaks panel on phones — it overlaps content */
+  .tweaks {
+    display: none !important;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Tightest phones: drop the inline nav links completely; anchors still
+     work from the footer/scroll-to-top and from the mark region. */
+  .nav-links {
+    display: none;
+  }
+  .topbar {
+    padding: 14px 0 10px;
+  }
+  .topbar .mark {
+    font-size: 11px;
+    gap: 8px;
+  }
+
+  section {
+    padding-top: 56px;
+    padding-bottom: 56px;
+  }
+  .mast {
+    padding-top: 40px;
+    padding-bottom: 48px;
+  }
+
+  .mast h1 {
+    font-size: clamp(42px, 13vw, 64px);
+  }
+  .mast-lede {
+    font-size: 18px;
+  }
+  .mast-lede .drop {
+    font-size: 44px;
+  }
+  .kicker .sep {
+    display: none;
+  }
+
+  .sec-head {
+    margin-bottom: 36px;
+  }
+  .sec-title {
+    font-size: clamp(34px, 9vw, 44px);
+  }
+
+  .proj {
+    padding: 18px;
+  }
+  .proj .p-title {
+    font-size: 28px;
+  }
+  .proj .p-foot {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  /* aspect-ratio handles this breakpoint too. */
+
+  .pub .t {
+    font-size: 22px;
+  }
+
+  .quote {
+    font-size: 22px;
+  }
+  .quote::before {
+    font-size: 60px;
+    top: -30px;
+  }
+
+  .contact a.big-mail {
+    font-size: clamp(22px, 7.5vw, 30px);
+  }
+}

@@ -1,0 +1,26 @@
+{
+    "projectId": "chirag-project-prod",
+    "projectName": "Main Project",
+    "endpoint": "https://sgp.cloud.appwrite.io/v1",
+    "sites": [
+        {
+            "$id": "vaibhavee-singh-profile-website",
+            "name": "Vaibhavee Singh Profile Website",
+            "path": "./",
+            "framework": "tanstack-start",
+            "enabled": true,
+            "logging": true,
+            "timeout": 30,
+            "buildRuntime": "node-22",
+            "adapter": "static",
+            "installCommand": "npm install",
+            "buildCommand": "npm run build",
+            "outputDirectory": "./dist/client",
+            "fallbackFile": "",
+            "startCommand": "",
+            "buildSpecification": "s-4vcpu-4gb",
+            "runtimeSpecification": "s-4vcpu-4gb",
+            "deploymentRetention": 5
+        }
+    ]
+}
