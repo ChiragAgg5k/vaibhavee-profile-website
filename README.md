@@ -3,6 +3,8 @@
 Personal portfolio site for Vaibhavee Singh (AI Engineering, ML Research, SWE),
 built as a notebook/magazine-styled single page.
 
+**Live:** https://vaibhavee.appwrite.network/
+
 ![Screenshot](docs/screenshot.png)
 
 ## Stack
