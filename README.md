@@ -5,7 +5,16 @@ built as a notebook/magazine-styled single page.
 
 **Live:** https://vaibhavee.appwrite.network/
 
-![Screenshot](docs/screenshot.png)
+<table>
+  <tr>
+    <td><img src="docs/screenshot.png" alt="Light theme" /></td>
+    <td><img src="docs/screenshot-dark.png" alt="Ink (dark) theme" /></td>
+  </tr>
+  <tr>
+    <td align="center"><sub>Paper (light)</sub></td>
+    <td align="center"><sub>Ink (dark)</sub></td>
+  </tr>
+</table>
 
 ## Stack
 
