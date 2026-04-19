@@ -8,6 +8,8 @@ import {
 import appCss from '../styles.css?url'
 import { NotFound } from '../components/NotFound'
 
+const umamiWebsiteId = import.meta.env.VITE_UMAMI_WEBSITE_ID
+
 export const Route = createRootRoute({
   head: () => ({
     meta: [
@@ -39,6 +41,15 @@ export const Route = createRootRoute({
         // Inline theme boot — prevents FOUC when a user previously chose "ink".
         children: `(function(){try{var t=localStorage.getItem('vs-theme');if(t==='ink')document.documentElement.dataset.themeBoot='ink';}catch(e){}})();`,
       },
+      ...(umamiWebsiteId
+        ? [
+            {
+              defer: true,
+              src: 'https://cloud.umami.is/script.js',
+              'data-website-id': umamiWebsiteId,
+            },
+          ]
+        : []),
     ],
   }),
   notFoundComponent: NotFound,
